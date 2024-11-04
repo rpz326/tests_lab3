@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ recipe.title }}</title>
+    <link rel="stylesheet" href="{% static 'recipe_catalog/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <a href="{% url 'recipe_list' %}">Все рецепты</a>
+                <a href="{% url 'about' %}">О сервисе</a>
+            </nav>
+            <h1>{{ recipe.title }}</h1>
+        </header>
+        <img src="{{ recipe.image }}" alt="{{ recipe.title }}" style="width: 100%; max-width: 600px; height: auto; margin: 20px 0;">
+        <section>
+            <p>{{ recipe.summary|safe }}</p>
+            <h3>Ингредиенты:</h3>
+            <ul>
+                {% for ingredient in recipe.extendedIngredients %}
+                    <li>{{ ingredient.original }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Инструкции:</h3>
+            <p>{{ recipe.instructions|safe }}</p>
+        </section>
+    </div>
+</body>
+</html>

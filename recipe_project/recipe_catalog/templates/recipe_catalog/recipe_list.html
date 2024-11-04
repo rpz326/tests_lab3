@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Все рецепты</title>
+    <link rel="stylesheet" href="{% static 'recipe_catalog/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <a href="{% url 'recipe_list' %}">Все рецепты</a>
+                <a href="{% url 'about' %}">О сервисе</a>
+            </nav>
+            <h1>Все рецепты</h1>
+        </header>
+        <div class="card-container">
+            {% for recipe in recipes %}
+            <div class="card">
+                {% if recipe.image %}
+                    <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
+                {% else %}
+                    <img src="{% static 'default_image.jpg' %}" alt="Default Image">
+                {% endif %}
+                <h2>{{ recipe.title }}</h2>
+                <p>{{ recipe.description|truncatewords:20 }}</p>
+                <a href="{% url 'recipe_detail' recipe.id %}">Перейти к рецепту</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
