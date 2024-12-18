@@ -16,16 +16,18 @@
             </nav>
             <h1>{{ recipe.title }}</h1>
         </header>
-        <img src="{{ recipe.image }}" alt="{{ recipe.title }}" style="width: 100%; max-width: 600px; height: auto; margin: 20px 0;">
+        {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" style="width: 100%; max-width: 600px; height: auto; margin: 20px 0;">
+        {% endif %}
         <section>
             <p>{{ recipe.summary|safe }}</p>
             <h3>Ингредиенты:</h3>
             <ul>
-                {% for ingredient in recipe.extendedIngredients %}
-                    <li>{{ ingredient.original }}</li>
+                {% for ingredient in recipe.ingredients.all %}
+                    <li>{{ ingredient.name }} - {{ ingredient.quantity }}</li>
                 {% endfor %}
             </ul>
-            <h3>Инструкции:</h3>
+            <h3>Рецепт:</h3>
             <p>{{ recipe.instructions|safe }}</p>
         </section>
     </div>

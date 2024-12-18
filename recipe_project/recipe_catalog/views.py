@@ -1,19 +1,12 @@
-import requests
-from django.shortcuts import render
-from django.conf import settings
-
-API_KEY = "d7a1dab7d21149f8a233065b48dfe1d8"
+from django.shortcuts import render, get_object_or_404
+from .models import Recipe
 
 def recipe_list(request):
-    url = f"https://api.spoonacular.com/recipes/complexSearch?apiKey={API_KEY}"
-    response = requests.get(url)
-    recipes = response.json().get('results', [])
+    recipes = Recipe.objects.all()
     return render(request, 'recipe_catalog/recipe_list.html', {'recipes': recipes})
 
 def recipe_detail(request, recipe_id):
-    url = f"https://api.spoonacular.com/recipes/{recipe_id}/information?apiKey={API_KEY}"
-    response = requests.get(url)
-    recipe = response.json()
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
     return render(request, 'recipe_catalog/recipe_detail.html', {'recipe': recipe})
 
 def about(request):
